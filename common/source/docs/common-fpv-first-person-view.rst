@@ -16,26 +16,23 @@ instrument overlay on your FPV monitor.
 Recommended parts
 =================
 
-To set up an FPV system on your Copter/Plane equipped vehicle you will
-need:
+To set up an FPV system on your vehicle you will need to add a video transmission system, including a flight camera and a video transmitter on your vehicle, as well as a video receiver and a display device on ground. 
+Ardupilot supports a variety of :ref:`flight controllers <common-autopilots>`, some of which are equipped with an onboard video overlay chipset, allowing to overlay flight data onto your flight camera's video, as well as an onboard power module that provides battery monitoring without additional periphereals required. While it is convenient to use an aio-type flightcontroller for FPV purposes, alternatively a standalone MinimOSD-type board can be added to any existent flightcontroller without an onboard video chipset.
+The parts recommended for a typical FPV setup are:
 
--  `Sony CCD camera <http://www.amazon.com/Miniature-Color-Camera-Super-520TV/dp/B00LAK573Y>`__
--  `MinimOSD <http://store.jdrones.com/jD_MiniOSD_V12_p/jdminiosd12.htm>`__
-   for On Screen Display of aircraft data
--  5.8Ghz 200mw video transmitter/receiver pair
--  Two 900mAh LiPo batteries (one for the air, one for the ground) to
-   power the transmitter, receiver and camera
+-  A CCD- or CMOS-type FPV flight camera with wide dynamic range (WDR) to provide good video quality under varying lighting conditions.
+-  A pair of video transmitter and receiver. Mind your country's legal restrictions on HF frequencies and transmitted power. A typical 5.8Ghz video transmitter/receiver pair usually is a good place to start from.
+-  An :ref:`onscreen display <common-osd-boards-on-screen-display>`. If you're not using ArduPilot onboard OSD on an aio-type flight controller, it is recommended to add a standalone board like `MinimOSD <http://store.jdrones.com/jD_MiniOSD_V12_p/jdminiosd12.htm>`__
+   for On Screen Display of aircraft data.
+-  A battery to power the video receiver and display device in your ground station.
 
-In addition you will need a monitor like the `Black Pearl <http://www.amazon.com/FlySight-Black-Pearl-Diversity-Integrated/dp/B00KR69WHY>`__
-or goggles.
+There are two basic options to display your flight cam's video on the ground. One is a monitor like the `Black Pearl <http://www.amazon.com/FlySight-Black-Pearl-Diversity-Integrated/dp/B00KR69WHY>`__, the other is to use dedicated FPV video goggles. While using goggles provides a more immersive flight experience, it may be prefereable to use a monitor in some cases. Mind that there are FPV-specific video goggles and monitors that come with builtin video receiver modules or optional module bays to facilitate your ground setup.
 
 **Goggle options:**
 
 -  `Fat Shark <http://www.fatshark.com/default.html>`__ has a wide range
    of goggles including the "Attitude" and "Dominator" that have been
-   proven to work.  Note that some models come with a built in
-   transmitter & receiver that would replace the 3DR video kits 5.8 Ghz
-   transmitter/receiver pair mentioned above.
+   proven to work well. Most Fatshark goggles have options for video receiver modules. 
 -  Low cost 320x240 resolution goggles (`example video <https://www.youtube.com/watch?v=tG-4JNpE2fc>`__) are not
    recommended because the higher resolution 640x480 (`example video <https://www.youtube.com/watch?v=ywqacXyjcNw>`__) or SVGA
    goggles provide a much better flying experience.
@@ -52,11 +49,13 @@ TBS Discovery Quadcopter that includes an APM2 and MinimOSD:
 .. image:: ../../../images/tbs_discovery_install_APM2.6withminimosdtbscore.jpg
     :target: ../_images/tbs_discovery_install_APM2.6withminimosdtbscore.jpg
 
-FPV equipment on the vehicle should be placed as far away as possible
-from GPS and RC receiver to reduce the chance of interference.
+FPV equipment on the vehicle requires aditional attention regarding clean power sources and separation of HF-critical components
+like GPS and RC receiver to reduce the chance of interferences limiting your transmission ranges and video quality.
 
-Minim OSD setup through mission planner
-=======================================
+OSD setup
+==========
+
+A guide to ArduPilot's onboard OSD :ref:`can be found here <common-osd-overview>`.
 
 The MinimOSD set-up guide :ref:`can be found here <common-minim-osd-quick-installation-guide>`.
 
