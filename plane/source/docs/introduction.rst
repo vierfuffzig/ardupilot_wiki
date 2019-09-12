@@ -24,9 +24,9 @@ the air.
 -  :ref:`Tuning <common-tuning>`- Verify performance and behavior,
    adjusting parameters to suit
 -  :ref:`Mission planning <common-mission-planning>` - Programming missions.
--  :ref:`Flying <starting-up-and-calibrating-arduplane>`- Safe-skillful
-   piloting and rules of the air, weather and location considerations,
-   pre-flight checks, emergency procedures, operation examples
+-  :ref:`Flying <starting-up-and-calibrating-arduplane>`- Pre-flight checks, operation examples
+-  :ref:`Safety notes <safety-notes>`- Basic safety notes, principles of
+   stall prevention and recovery
 
 .. warning::
 
