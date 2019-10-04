@@ -14,10 +14,10 @@ This articles describes how to setup and use features supported by recent BLHeli
 
 .. note::
 
-   These features are available with Copter-3.6, Plane-3.9 and Rover-3.5 (or higher) using the ChibiOS firmware for STM32 based flight boards. 
+   These features are available with Copter-3.6, Plane-3.9 and Rover-3.5 (or higher) using the ChibiOS firmware for STM32 based flight boards.
 
 .. note::
-   Recently there is a growing number of proprietary and non-proprietary 16 / 32 bit ESC firmware that support DShot and other digital ESC protocols, but not BLHeli_32-specific features like passthrough and telemetry. See your ESC's manual for further detail on supported features.
+   Recently there is a growing number of proprietary and non-proprietary 16 / 32 bit ESCs with firmware that support DShot and other digital ESC protocols, but not BLHeli_32-specific features like passthrough and telemetry. See your ESC's manual for further detail on supported features.
 
 
 .. note::
@@ -44,7 +44,7 @@ DShot ESC protocol
 Dshot is a digital ESC protocol. In contrast to traditional servo-type PWM it allows fast, high resolution digital communication. This opens the door for more precise vehicle control. This is especially useful in multirotor and quadplane applications.
 
 ..  note::
-   Only try DShot on ESCs that are known to support it or you will get unpredictable results. Reverse thrust and virtual batteries are not yet supported in official release-type ardupilot firmware.
+   Only try DShot on ESCs that are known to support it or you will get unpredictable results. Reverse thrust and virtual batteries are not yet supported in stable releases of ArduPilot firmware.
 
 The DShot ESC protocol's key advantages are:
 
@@ -54,7 +54,7 @@ The DShot ESC protocol's key advantages are:
 - very high protocol frame rates are supported
 
 ..  note::
-   ArduPilot is currently supporting DShot output on copter and plane release-type firmware only.
+   ArduPilot is currently supporting DShot output on released stable copter and plane firmware versions only.
 
 
 Technical detail
@@ -75,7 +75,7 @@ DShot sends 16 bits per frame, allocated as follows:
 - 1 bit for telemetry request
 - 4 bits for CRC (simple XOR)
 
-This gives a good throttle resolution, with support for asking the ESC to provide telemetry feedback. See below for more information on ESC telemetry.
+This gives a good throttle resolution, with support for ESC telemetry feedback, if available from the ESC. See below for more information on ESC telemetry.
 
 
 Configuring DShot ESC protocol output
@@ -108,10 +108,10 @@ The following section shows how to setup BLHeli_32 pass-through support:
 To enable BLHeli_32 pass-through you need to set the following parameters and reboot your flight controller:
 
 - Set :ref:`SERVO_BLH_AUTO <SERVO_BLH_AUTO>` to 1 to enable automatic mapping of multirotor motors for BLHeli_32 pass-through and telemetry support. for most multirotor and quadplane users this will do the right thing. if using BLHeli_32 ESCs on non-multirotor motors with the respective SERVOn_FUNCTION set to 70 (=throttle), 73 (=throttle left) or 74 (=throttle right), you will need to further specify the used outputs as follows:
-  
+
 - Use :ref:`SERVO_BLH_MASK <SERVO_BLH_MASK>` to enable BLHeli_32 pass-through and telemetry support on non-multirotor motors and / or exactly specify which servo outputs you want to enable BLHeli_32 pass-through and telemetry on.
 
-- Set :ref:`SERVO_BLH_PORT <SERVO_BLH_PORT>` to sepcify the flightcontroller's port used to connect to your PC running BLHeliSuite32 for ESC configfuration. It defaults to USB and likely does not need to be altered. Mind that this does NOT specify the serial port used for the ESC's telemetry feedback to your flight controller!
+- Set :ref:`SERVO_BLH_PORT <SERVO_BLH_PORT>` to specify the flight controller's port used to connect to your PC running BLHeliSuite32 for ESC configuration. It defaults to USB and likely does not need to be altered. Beware that this does NOT specify the serial port used for the ESC's telemetry feedback to your flight controller!
 
 Now connect a USB cable to your flight controller and use BLHeliSuite32 on Windows to connect. Select "BLHeli32 Bootloader (Betaflight/Cleanflight)" from the interfaces menu.
 
@@ -122,17 +122,17 @@ Now connect a USB cable to your flight controller and use BLHeliSuite32 on Windo
 BLHeli_32 ESC telemetry feedback
 ================================
 
-This allows monitoring and logging of performance data that previously required additional sensors (like power modules and RPM sensors). The detailed data provided by every ESC allows real-time decisions and indidvidual ESC or motor performance tuning and failure analysis.
+This allows monitoring and logging of performance data that previously required additional sensors (like power modules and RPM sensors). The detailed data provided by every ESC allows real-time decisions and individual ESC or motor performance tuning and failure analysis.
 
 Connect all ESC's telemetry wires to a single serial port's RX pin on the flight controller (above diagram uses Serial5 as an example). ESC telemetry is currently only supported with BLHeli_32 ESCs. A pin or wire for ESC telemetry is pre-soldered on most BLHeli_32 ESCs. If the wire isn't pre-soldered you will need to solder it yourself. Pinouts for serial ports on The Cube can be found `here <http://ardupilot.org/copter/docs/common-pixhawk2-overview.html>`__.
 
-Set the following paramaters to enable BLHeli_32 telemetry feedback to a flight controller's serial port:
+Set the following parameters to enable BLHeli_32 telemetry feedback to a flight controller's serial port:
 
-- :ref:`SERVO_BLH_AUTO <SERVO_BLH_AUTO>` = 1 to enable automatic mapping of multirotor motors for BLHeli_32 pass-through and telemetry support. for most multirotor and quadplane users this will do the right thing. if using BLHeli_32 ESCs on non-multirotor motors with the respective SERVOn_FUNCTION set to 70 (=throttle), 73 (=throttle left) or 74 (=throttle right), you will need to further specify the used outputs as follows:
-  
-- :ref:`SERVO_BLH_MASK <SERVO_BLH_MASK>` a bitmap used to enable BLHeli_32 pass-through and telemetry support on non-multirotor motors and / or exactly specify which servo outputs you want to enable pass-through and telemetry on.
+- :ref:`SERVO_BLH_AUTO <SERVO_BLH_AUTO>` = 1 to enable automatic mapping of multirotor motors for BLHeli_32 pass-through and telemetry support. for most multirotor and quadplane users this will do the right thing. If using BLHeli_32 ESCs on non-multirotor motors with the respective SERVOn_FUNCTION set to 70 (=throttle), 73 (=throttle left) or 74 (=throttle right), you will need to further specify the used outputs as follows:
 
-- :ref:`SERIAL5_PROTOCOL <SERIAL5_PROTOCOL>` 16 (= ESC telemetry). adjust the serial port your ESC telemetry wire is connected to as required.
+- :ref:`SERVO_BLH_MASK <SERVO_BLH_MASK>` : a bitmap used to enable BLHeli_32 pass-through and telemetry support on non-multirotor motors and / or exactly specify which servo outputs you want to enable pass-through and telemetry on (if available in ESC).
+
+- :ref:`SERIAL5_PROTOCOL <SERIAL5_PROTOCOL>` 16 (= ESC telemetry). This assumes serial port 5 is used. Adjust the serial port's protocol parameter to 16 , for the serial port that your ESC telemetry wire is connected to, as required. The correlation between serial port numbering and UART physical ports for you flight controller should be documented in its description page linked :ref:`here <common-autopilots>`.
 
 - :ref:`SERVO_BLH_TRATE <SERVO_BLH_TRATE>` defaults to 10. this enables telemetry at a 10hz update rate from the ESC.
 
@@ -153,7 +153,9 @@ This data can also be viewed in real-time using a ground station.  If using the 
     :width: 450px
 
 .. note::
-   Sending BLHeli_32 telemetry data to your GCS requires using mavlink2 on your GCS connection. While on current ardupilot firmware the USB port defaults to mavlink2, it might require adjusting the protocol setting when using a different port for GCS connection.
+   Sending BLHeli_32 telemetry data to your GCS requires using mavlink2 on your GCS connection. While on current ArduPilot firmware the USB port defaults to mavlink2, it might require adjusting the protocol setting when using a different port for GCS connection.
+
+In addition, some telemetry values can be displayed on the integrated :ref:`on-board OSD <common-osd-overview>`, if your flight controller has one.
 
 
 Where to buy
